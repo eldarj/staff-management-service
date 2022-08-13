@@ -6,7 +6,7 @@
 Users can have 2 roles with different permission levels.
 
 ##### Staff User:
-* Can register and log in
+* Can register
 * Can view his/her schedule for any period of time (up to 1 year)
 * Can see his/her coworker schedules
 
@@ -87,12 +87,11 @@ into something that handles specifically authz.
   - [x] Aggregation of shifts per user
   - [ ] Order by accumulated working hours
 - [ ] Auth
-  - [ ] Register
-  - [ ] Login - (needed?)
+  - [x] Register
   - [ ] Authorization on endpoints
 - [x] Unit tests
 - [ ] Integration, End to end tests
-- [ ] Run in docker
+- [ ] Run app in docker
 - [ ] Database
   - [ ] Feed data on init
-  - [ ] Run in docker
+  - [ ] Run db in docker

@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.users.service;
+package com.ejahijagic.staffmanagementservice.users;
 
 import static com.ejahijagic.staffmanagementservice.users.data.UserRole.ADMIN_USER;
 import static com.ejahijagic.staffmanagementservice.users.data.UserRole.STAFF_USER;
@@ -10,6 +10,8 @@ import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.users.service.UserNotFoundException;
+import com.ejahijagic.staffmanagementservice.users.service.UserService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;

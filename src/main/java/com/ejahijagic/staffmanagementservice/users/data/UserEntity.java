@@ -23,9 +23,9 @@ public class UserEntity {
 
   private String password;
 
-  private UserRole role;
+  private UserRole role = UserRole.STAFF_USER;
 
-  private Long workingHours;
+  private long workingHours;
 
   private boolean deleted;
 

@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.shifts.service;
+package com.ejahijagic.staffmanagementservice.shifts;
 
 import static com.ejahijagic.staffmanagementservice.companion.DateCompanion.DATE_FORMAT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
+import com.ejahijagic.staffmanagementservice.shifts.service.ShiftService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;

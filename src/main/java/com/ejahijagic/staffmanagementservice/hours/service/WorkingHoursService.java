@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.working.hours.service;
+package com.ejahijagic.staffmanagementservice.hours.service;
 
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingLong;

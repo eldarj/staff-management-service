@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.working.hours.service;
+package com.ejahijagic.staffmanagementservice.hours;
 
 import static com.ejahijagic.staffmanagementservice.companion.DateCompanion.DATE_FORMAT;
 import static com.ejahijagic.staffmanagementservice.users.data.UserRole.STAFF_USER;
@@ -10,6 +10,7 @@ import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.hours.service.WorkingHoursService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
