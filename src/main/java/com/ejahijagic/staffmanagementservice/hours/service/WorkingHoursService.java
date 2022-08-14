@@ -8,6 +8,7 @@ import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import org.springframework.stereotype.Component;
@@ -17,11 +18,11 @@ public record WorkingHoursService(UserRepository userRepository,
                                   ShiftRepository shiftRepository,
                                   DateCompanion dateCompanion) {
 
-  public List<UserEntity> getUsersWithWorkHoursAccumulated(String fromStr) {
-    var from = dateCompanion.parse(fromStr);
+  public List<UserEntity> getUserShiftsAccumulated(String from, String to) {
+    var dateFrom = dateCompanion.parse(from);
+    var dateTo = dateCompanion.parse(to);
 
-    List<ShiftEntity> shifts = shiftRepository.findByDateGreaterThanEqual(from);
-    Map<Long, Long> hoursPerUser = getAccumulatedHoursPerUser(shifts);
+    Map<Long, Long> hoursPerUser = getAccumulatedHoursPerUser(dateFrom, dateTo);
 
     return hoursPerUser.entrySet().stream().map(entry -> {
       var userId = entry.getKey();
@@ -31,7 +32,10 @@ public record WorkingHoursService(UserRepository userRepository,
     }).toList();
   }
 
-  private Map<Long, Long> getAccumulatedHoursPerUser(List<ShiftEntity> shifts) {
+  private Map<Long, Long> getAccumulatedHoursPerUser(Date from, Date to) {
+    var shifts = shiftRepository
+        .findByDateGreaterThanEqualAndDateLessThanEqual(from, to);
+
     var hoursSum = summingLong(ShiftEntity::getLengthHours);
     var hoursPerUser = groupingBy(
         ShiftEntity::getUserId, hoursSum);

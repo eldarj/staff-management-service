@@ -1,11 +1,14 @@
 package com.ejahijagic.staffmanagementservice.companion;
 
 import static com.ejahijagic.staffmanagementservice.companion.DateCompanion.DATE_FORMAT;
-import static java.time.temporal.ChronoUnit.DAYS;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.time.Instant;
+import com.ejahijagic.staffmanagementservice.companion.DateCompanion.InvalidDateFilterLengthException;
+import java.text.ParseException;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +29,7 @@ class DateCompanionTest {
   }
 
   @Test
-  void parseNullDateReturnsDefaultTest() {
+  void parseEmptyDateReturnsNullTest() {
     // given
     var date = "";
 
@@ -34,8 +37,7 @@ class DateCompanionTest {
     Date parsedDate = dateCompanion.parse(date);
 
     // then
-    Date expectedDate = new Date(Instant.now().minus(365, DAYS).toEpochMilli());
-    assertEquals(expectedDate.toString(), parsedDate.toString());
+    assertNull(parsedDate);
   }
 
   @Test
@@ -49,9 +51,56 @@ class DateCompanionTest {
     });
 
     // then
-    String expectedMessage = "10.2022 is in invalid format, please supply dd-MM-yyyy";
+    String expectedMessage = "10.2022 is in invalid, please supply dd-MM-yyyy";
     String actualMessage = exception.getMessage();
 
     assertEquals(expectedMessage, actualMessage);
+  }
+
+  @Test
+  void throwsResponseExceptionWhenDateFilterSuppliedIsLargerThan1YearTest() throws ParseException {
+    // given
+    var from = DATE_FORMAT.parse("1-1-2021");
+    var to = DATE_FORMAT.parse("10-9-2022");
+
+    // when
+    Exception exception = assertThrows(InvalidDateFilterLengthException.class, () -> {
+      dateCompanion.isDateFilterValidLength(from, to);
+    });
+
+    // then
+    var expectedMessage = "Supplied filter date span cannot be larger than a year";
+    var actualMessage = exception.getMessage();
+
+    assertEquals(expectedMessage, actualMessage);
+  }
+
+  @Test
+  void returnsFalseIfSuppliedFilterIsNotValidTest() throws ParseException {
+    // given
+    var from = DATE_FORMAT.parse("10-5-2022");
+
+    // when
+    boolean isValid = dateCompanion.isDateFilterValidLength(from, null);
+    boolean isValid2 = dateCompanion.isDateFilterValidLength(null, from);
+    boolean isValid3 = dateCompanion.isDateFilterValidLength(null, null);
+
+    // then
+    assertFalse(isValid);
+    assertFalse(isValid2);
+    assertFalse(isValid3);
+  }
+
+  @Test
+  void returnsTrueIfSuppliedFilterIsntValidTest() throws ParseException {
+    // given
+    var from = DATE_FORMAT.parse("10-5-2022");
+    var to = DATE_FORMAT.parse("10-9-2022");
+
+    // when
+    boolean isValid = dateCompanion.isDateFilterValidLength(from, to);
+
+    // then
+    assertTrue(isValid);
   }
 }

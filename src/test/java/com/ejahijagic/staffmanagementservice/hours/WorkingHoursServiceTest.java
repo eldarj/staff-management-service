@@ -6,11 +6,11 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.companion.DateCompanion;
+import com.ejahijagic.staffmanagementservice.hours.service.WorkingHoursService;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
-import com.ejahijagic.staffmanagementservice.hours.service.WorkingHoursService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -41,28 +41,31 @@ class WorkingHoursServiceTest {
     var user1Mock = getUserMock(124L);
     var user2Mock = getUserMock(125L);
 
-    var dateFrom = "15-5-2022";
-    var dateFromMock = DATE_FORMAT.parse(dateFrom);
-    var someDateAfterFrom = DATE_FORMAT.parse("25-6-2022");
+    var dateFromMock = DATE_FORMAT.parse("15-5-2022");
+    var dateToMock = DATE_FORMAT.parse("15-12-2022");
+    var someShiftDate = DATE_FORMAT.parse("25-6-2022");
 
     var shiftsMock = new ArrayList<ShiftEntity>() {{
-      add(new ShiftEntity(user0Mock.getId(), 8, someDateAfterFrom));
-      add(new ShiftEntity(user0Mock.getId(), 8, someDateAfterFrom));
-      add(new ShiftEntity(user0Mock.getId(), 8, someDateAfterFrom));
+      add(new ShiftEntity(user0Mock.getId(), 8, someShiftDate));
+      add(new ShiftEntity(user0Mock.getId(), 8, someShiftDate));
+      add(new ShiftEntity(user0Mock.getId(), 8, someShiftDate));
 
-      add(new ShiftEntity(user1Mock.getId(), 8, someDateAfterFrom));
+      add(new ShiftEntity(user1Mock.getId(), 8, someShiftDate));
 
-      add(new ShiftEntity(user2Mock.getId(), 4, someDateAfterFrom));
+      add(new ShiftEntity(user2Mock.getId(), 4, someShiftDate));
     }};
 
-    when(dateCompanion.parse(dateFrom)).thenReturn(dateFromMock);
-    when(shiftRepository.findByDateGreaterThanEqual(dateFromMock)).thenReturn(shiftsMock);
+    when(dateCompanion.parse("15-5-2022")).thenReturn(dateFromMock);
+    when(dateCompanion.parse("15-12-2022")).thenReturn(dateToMock);
+    when(shiftRepository.findByDateGreaterThanEqualAndDateLessThanEqual(
+        dateFromMock, dateToMock)).thenReturn(shiftsMock);
     when(userRepository.findById(user0Mock.getId())).thenReturn(Optional.of(user0Mock));
     when(userRepository.findById(user1Mock.getId())).thenReturn(Optional.of(user1Mock));
     when(userRepository.findById(user2Mock.getId())).thenReturn(Optional.of(user2Mock));
 
     // when
-    List<UserEntity> users = workingHoursService.getUsersWithWorkHoursAccumulated(dateFrom);
+    List<UserEntity> users = workingHoursService.getUserShiftsAccumulated("15-5-2022",
+        "15-12-2022");
 
     // then
     var expectedHoursUserOne = 24;

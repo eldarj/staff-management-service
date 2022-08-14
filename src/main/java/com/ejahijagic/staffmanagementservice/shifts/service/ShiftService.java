@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public record ShiftService(ShiftRepository shiftRepository) {
+public record ShiftService(ShiftRepository shiftRepository, ShiftFilterCompanion shiftCompanion) {
 
-  public List<ShiftEntity> findAllByUser(long userId) {
-    return shiftRepository.findByUserId(userId);
+  public List<ShiftEntity> findShifts(long userId, String from, String to) {
+    var filter = shiftCompanion.of(from, to);
+    return shiftRepository.findByUserIdAndDateGreaterThanEqualAndDateLessThanEqual(
+        userId, filter.dateFrom(), filter.dateTo());
   }
 
   public ShiftEntity create(ShiftEntity shift) {
