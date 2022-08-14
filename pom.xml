@@ -82,6 +82,13 @@
       <artifactId>mockito-inline</artifactId>
       <scope>test</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.seregamorph</groupId>
+      <artifactId>hamcrest-more-matchers</artifactId>
+      <version>0.1</version>
+      <scope>test</scope>
+    </dependency>
   </dependencies>
 
   <build>

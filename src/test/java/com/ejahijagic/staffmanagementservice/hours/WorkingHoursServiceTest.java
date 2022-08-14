@@ -2,6 +2,10 @@ package com.ejahijagic.staffmanagementservice.hours;
 
 import static com.ejahijagic.staffmanagementservice.companion.DateCompanion.DATE_FORMAT;
 import static com.ejahijagic.staffmanagementservice.users.data.UserRole.STAFF_USER;
+import static com.github.seregamorph.hamcrest.OrderMatchers.strictOrdered;
+import static java.util.Collections.reverseOrder;
+import static java.util.Comparator.comparing;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -78,14 +82,18 @@ class WorkingHoursServiceTest {
     assertEquals(expectedHoursUserOne, actualHoursUserOne);
     assertEquals(expectedHoursUserTwo, actualHoursUserTwo);
     assertEquals(expectedHoursUserThree, actualHoursUserThree);
+
+    // assert descending order
+    assertThat(users, strictOrdered(comparing(UserEntity::getWorkingHours, reverseOrder())));
   }
 
   private UserEntity getUserMock(long id) {
-    return new UserEntity(id, "mock", "", STAFF_USER, 0L, false);
+    return new UserEntity(id, "mock", "", STAFF_USER, 0, false);
   }
 
-  private Long getHours(long userId, List<UserEntity> users) {
-    return users.stream().filter(user -> user.getId() == userId)
+  private Integer getHours(long userId, List<UserEntity> users) {
+    return users.stream()
+        .filter(user -> user.getId() == userId)
         .findFirst().orElse(null)
         .getWorkingHours();
   }

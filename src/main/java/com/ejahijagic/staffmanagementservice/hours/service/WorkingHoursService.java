@@ -1,7 +1,9 @@
 package com.ejahijagic.staffmanagementservice.hours.service;
 
+import static java.util.Comparator.comparing;
+import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingLong;
+import static java.util.stream.Collectors.summingInt;
 
 import com.ejahijagic.staffmanagementservice.companion.DateCompanion;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
@@ -22,21 +24,23 @@ public record WorkingHoursService(UserRepository userRepository,
     var dateFrom = dateCompanion.parse(from);
     var dateTo = dateCompanion.parse(to);
 
-    Map<Long, Long> hoursPerUser = getAccumulatedHoursPerUser(dateFrom, dateTo);
+    Map<Long, Integer> hoursPerUser = getAccumulatedHoursPerUser(dateFrom, dateTo);
 
     return hoursPerUser.entrySet().stream().map(entry -> {
       var userId = entry.getKey();
       var user = userRepository.findById(userId).get();
       user.setWorkingHours(entry.getValue());
       return user;
-    }).toList();
+    }).sorted(
+        comparing(UserEntity::getWorkingHours, reverseOrder())
+    ).toList();
   }
 
-  private Map<Long, Long> getAccumulatedHoursPerUser(Date from, Date to) {
+  private Map<Long, Integer> getAccumulatedHoursPerUser(Date from, Date to) {
     var shifts = shiftRepository
         .findByDateGreaterThanEqualAndDateLessThanEqual(from, to);
 
-    var hoursSum = summingLong(ShiftEntity::getLengthHours);
+    var hoursSum = summingInt(ShiftEntity::getLengthHours);
     var hoursPerUser = groupingBy(
         ShiftEntity::getUserId, hoursSum);
 

@@ -25,7 +25,7 @@ public class UserEntity {
 
   private UserRole role = UserRole.STAFF_USER;
 
-  private long workingHours;
+  private Integer workingHours;
 
   private boolean deleted;
 
