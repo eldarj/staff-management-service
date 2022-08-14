@@ -9,14 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity(name = "users")
 public class UserEntity {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
   private String username;
@@ -25,7 +25,7 @@ public class UserEntity {
 
   private UserRole role = UserRole.STAFF_USER;
 
-  private Integer workingHours;
+  private Integer workingHours = 0;
 
   private boolean deleted;
 

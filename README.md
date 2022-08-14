@@ -21,11 +21,38 @@ Users can have 2 roles with different permission levels.
 ## Getting Started
 ### Running the service
 
-Run the service as a docker container with
+To run the service as well as a MySQL container, simply use the `run.sh` script,
+or simply execute the following:
+```
+mvn clean package -DskipTests
+docker build -t local/staff-management-service:latest .
+
+docker-compose up
+```
+
+The above will compile the service into it's target folder, and then build the image.
+
+Either use `docker-compose up` to run both the db and app containers, or run each
+respectively with `docker run`.
+
+If you want to start the app with `docker run` make sure you provide the needed
+params, network, env vars, etc. You can find these in `docker-compose.yaml`
+
+### Init Data
+
+Whatever way you run the service, it will feed initial data into the db. See
+`resources/data.sql`
+
+These can also be used when invoking the API - e.g.
+`ejahijagic:123456`
+
+The SQL file contains the hashed password which is `123456` for all users.
 
 ### Running tests
-Unit tests can be found within test/java/com/ejahijagic/staff. Run each in
-your IDE or simply with
+Unit tests can be found within `test/java/com/ejahijagic/staffmanagementservice`. 
+
+Run each in your IDE or with `mvn test`
+
 ---
 
 ## REST Endpoints
@@ -85,13 +112,13 @@ into something that handles specifically authz.
   - [x] Shifts CRUD
   - [x] Working hours
   - [x] Aggregation of shifts per user
-  - [ ] Order by accumulated working hours
+  - [x] Order by accumulated working hours
 - [ ] Auth
   - [x] Register
   - [ ] Authorization on endpoints
 - [x] Unit tests
 - [ ] Integration, End to end tests
-- [ ] Run app in docker
-- [ ] Database
-  - [ ] Feed data on init
-  - [ ] Run db in docker
+- [x] Run app in docker
+- [x] Database
+  - [x] Feed data on init
+  - [x] Run db in docker
