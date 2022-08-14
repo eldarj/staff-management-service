@@ -4,7 +4,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.ejahijagic.staffmanagementservice.authentication.data.RegisterUserRequest;
+import com.ejahijagic.staffmanagementservice.authentication.model.RegisterUserRequest;
 import com.ejahijagic.staffmanagementservice.authentication.service.AuthenticationService;
 import com.ejahijagic.staffmanagementservice.companion.PasswordCompanion;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;

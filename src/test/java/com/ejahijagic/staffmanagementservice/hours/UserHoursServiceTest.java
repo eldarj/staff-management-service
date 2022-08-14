@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.companion.DateCompanion;
-import com.ejahijagic.staffmanagementservice.hours.service.WorkingHoursService;
+import com.ejahijagic.staffmanagementservice.hours.service.UserHoursService;
+import com.ejahijagic.staffmanagementservice.hours.service.UserHoursService.Order;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
@@ -26,7 +27,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
-class WorkingHoursServiceTest {
+class UserHoursServiceTest {
 
   @Mock
   UserRepository userRepository;
@@ -36,7 +37,7 @@ class WorkingHoursServiceTest {
   DateCompanion dateCompanion;
 
   @InjectMocks
-  WorkingHoursService workingHoursService;
+  UserHoursService userHoursService;
 
   @Test
   void getUsersWithWorkHoursAccumulatedTest() throws ParseException {
@@ -68,7 +69,7 @@ class WorkingHoursServiceTest {
     when(userRepository.findById(user2Mock.getId())).thenReturn(Optional.of(user2Mock));
 
     // when
-    List<UserEntity> users = workingHoursService.getUserShiftsAccumulated("15-5-2022",
+    List<UserEntity> users = userHoursService.findUserShiftsAccumulated(Order.DESC, "15-5-2022",
         "15-12-2022");
 
     // then

@@ -1,9 +1,11 @@
 package com.ejahijagic.staffmanagementservice.authentication.service;
 
-import com.ejahijagic.staffmanagementservice.authentication.data.RegisterUserRequest;
+import com.ejahijagic.staffmanagementservice.authentication.model.RegisterUserRequest;
 import com.ejahijagic.staffmanagementservice.companion.PasswordCompanion;
+import com.ejahijagic.staffmanagementservice.exception.UserAlreadyExistsException;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -11,7 +13,11 @@ public record AuthenticationService(UserRepository userRepository, PasswordCompa
 
   public void register(RegisterUserRequest registerUserRequest) {
     UserEntity user = of(registerUserRequest);
-    userRepository.save(user);
+    try {
+      userRepository.save(user);
+    } catch (DataIntegrityViolationException e) {
+      throw new UserAlreadyExistsException(user.getUsername());
+    }
   }
 
   private UserEntity of(RegisterUserRequest userRequest) {

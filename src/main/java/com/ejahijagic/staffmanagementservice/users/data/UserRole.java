@@ -1,5 +1,7 @@
 package com.ejahijagic.staffmanagementservice.users.data;
 
+import java.util.Objects;
+
 public enum UserRole {
   STAFF_USER("staff"), ADMIN_USER("admin");
 
@@ -11,5 +13,15 @@ public enum UserRole {
 
   public String getName() {
     return name;
+  }
+
+  public static UserRole of(String role) {
+    if (Objects.equals(role, "staff")) {
+      return STAFF_USER;
+    } else if (Objects.equals(role, "admin")) {
+      return ADMIN_USER;
+    }
+
+    throw new IllegalArgumentException("No enum found for " + role);
   }
 }

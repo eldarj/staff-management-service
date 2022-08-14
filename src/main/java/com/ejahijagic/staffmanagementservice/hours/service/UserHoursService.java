@@ -1,6 +1,7 @@
 package com.ejahijagic.staffmanagementservice.hours.service;
 
 import static java.util.Comparator.comparing;
+import static java.util.Comparator.naturalOrder;
 import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
@@ -10,17 +11,28 @@ import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 import org.springframework.stereotype.Component;
 
 @Component
-public record WorkingHoursService(UserRepository userRepository,
-                                  ShiftRepository shiftRepository,
-                                  DateCompanion dateCompanion) {
+public record UserHoursService(
+    UserRepository userRepository, ShiftRepository shiftRepository, DateCompanion dateCompanion) {
 
-  public List<UserEntity> getUserShiftsAccumulated(String from, String to) {
+  @Getter
+  @AllArgsConstructor
+  public enum Order {
+    ASC("asc"), DESC("desc");
+    private final String value;
+  }
+
+  public List<UserEntity> findUserShiftsAccumulated(Order order, String from, String to) {
+    Comparator<Integer> comparator = getComparator(order);
+
     var dateFrom = dateCompanion.parse(from);
     var dateTo = dateCompanion.parse(to);
 
@@ -32,8 +44,12 @@ public record WorkingHoursService(UserRepository userRepository,
       user.setWorkingHours(entry.getValue());
       return user;
     }).sorted(
-        comparing(UserEntity::getWorkingHours, reverseOrder())
+        comparing(UserEntity::getWorkingHours, comparator)
     ).toList();
+  }
+
+  private Comparator<Integer> getComparator(Order order) {
+    return Order.DESC.equals(order) ? reverseOrder() : naturalOrder();
   }
 
   private Map<Long, Integer> getAccumulatedHoursPerUser(Date from, Date to) {

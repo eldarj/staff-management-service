@@ -8,10 +8,12 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.ejahijagic.staffmanagementservice.exception.UserNotFoundException;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
-import com.ejahijagic.staffmanagementservice.users.service.UserNotFoundException;
+import com.ejahijagic.staffmanagementservice.users.model.User;
 import com.ejahijagic.staffmanagementservice.users.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +25,9 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class UserServiceTest {
+
+  @Mock
+  ObjectMapper objectMapper;
 
   @Mock
   UserRepository userRepository;
@@ -42,7 +47,7 @@ class UserServiceTest {
     when(userRepository.findAll()).thenReturn(usersMock);
 
     // when
-    List<UserEntity> users = userService.findAllUsers();
+    List<User> users = userService.findAllUsers();
 
     // then
     verify(userRepository, times(1)).findAll();
@@ -56,26 +61,30 @@ class UserServiceTest {
     when(userRepository.save(user)).thenReturn(user);
 
     // when
-    UserEntity createdUser = userService.create(user);
+    User createdUser = userService.create(user);
 
     verify(userRepository, times(1)).save(user);
-    assertEquals(user, createdUser);
+    assertEquals(user.getUsername(), createdUser.getUsername());
   }
 
   @Test
   void editUserTest() {
     // given
-    UserEntity user = new UserEntity("eldar", STAFF_USER);
-    user.setId(123L);
+    var userEntity = new UserEntity("eldar", STAFF_USER);
+    userEntity.setId(123L);
+    var user = new User(userEntity.getId(), "ejahijagic", STAFF_USER.getName());
 
-    when(userRepository.save(user)).thenReturn(user);
+    when(userRepository.findById(123L)).thenReturn(Optional.of(userEntity));
+    userEntity.setUsername(user.getUsername());
+    when(userRepository.save(userEntity)).thenReturn(userEntity);
+    when(objectMapper.convertValue(userEntity, User.class)).thenReturn(user);
 
     // when
-    UserEntity updatedUser = userService.update(123L, user);
+    User updatedUser = userService.update(123L, user);
 
     // then
-    verify(userRepository, times(1)).save(user);
-    assertEquals(user, updatedUser);
+    verify(userRepository, times(1)).save(userEntity);
+    assertEquals(userEntity.getUsername(), updatedUser.getUsername());
   }
 
   @Test
@@ -86,7 +95,7 @@ class UserServiceTest {
     when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
 
     // when
-    userService.softDelete(123L);
+    userService.delete(123L);
 
     verify(userRepository, times(1)).findById(123L);
     verify(userRepository, times(1)).save(userMock);
@@ -99,7 +108,7 @@ class UserServiceTest {
 
     // when
     Exception exception = assertThrows(Exception.class, () -> {
-      userService.softDelete(userId);
+      userService.delete(userId);
     });
 
     // then

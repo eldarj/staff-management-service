@@ -6,14 +6,14 @@
 Users can have 2 roles with different permission levels.
 
 ##### Staff User:
-* Can register
-* Can view his/her schedule for any period of time (up to 1 year)
-* Can see his/her coworker schedules
+* [x] Can register
+* [x] Can view his/her schedule for any period of time (up to 1 year)
+* [x] Can see his/her coworker schedules
 
 #### Admin:
-* Can edit/delete all users,
-* Can create/edit/delete schedule for users
-* Can order users list by accumulated work hours per arbitrary period (up to 1
+* [x] Can edit/delete all users,
+* [x] Can create/edit/delete schedule for users
+* [x] Can order users list by accumulated work hours per arbitrary period (up to 1
   year).
 
 --- 
@@ -57,22 +57,18 @@ Run each in your IDE or with `mvn test`
 
 ## REST Endpoints
 The set of endpoints this service provides:
-### Authentication
-* /api/auth/login PUT
-* /api/auth/logout DELETE
+### Registration
 * /api/auth/register POST
 
-The above would be a candidate for moving out of this REST API, usually
-into something that handles specifically authz.
+Considering its basic auth required only, the above provides just
+an endpoint for registering as a new user.
 
 ### User Management & Staff Scheduling
 #### Users
 * Returns all users
     * /api/users GET
-    * Query Params
-        * page
-        * orderBy
-        * shiftFromDate, shiftToDate
+* Return single user
+  * /api/users/user-id GET
 * Edits a user
     * /api/users/user-id PUT
 * Deletes a user
@@ -80,14 +76,25 @@ into something that handles specifically authz.
 
 #### Shifts (Schedules)
 * Admin/User views shifts for any period of time (up to 1 year)
-    * /api/users/user-id/shifts POST
-* Admin creates a schedule for a given user
-    * /api/users/user-id/shifts POST
-* Admin updates a schedule for a given user
-    * /api/users/user-id/shifts PUT
-* Admin deletes a schedule for a given user
-    * /api/users/user-id/shifts DELETE
+    * /api/shifts GET
+    * Query Params:
+      * user-id
+      * from
+      * to
+* Admin creates a schedule
+    * /api/shifts POST
+* Admin updates a schedule
+    * /api/shifts PUT
+* Admin deletes a schedule
+    * /api/shifts DELETE
 
+#### Accumulated Working Hours
+* Get list of users ordered by accumulated working hours
+  * /api/hours
+  * Query params:
+    * order
+    * from
+    * to
 ## Data and Schema
 #### Shift (Schedule)
 * Work date

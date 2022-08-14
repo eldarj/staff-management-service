@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.authentication.data;
+package com.ejahijagic.staffmanagementservice.authentication.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

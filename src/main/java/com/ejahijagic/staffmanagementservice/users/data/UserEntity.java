@@ -1,6 +1,6 @@
 package com.ejahijagic.staffmanagementservice.users.data;
 
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,15 +19,15 @@ public class UserEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private long id;
 
+  @Column(unique = true)
   private String username;
 
+  @Column(nullable = false)
   private String password;
 
   private UserRole role = UserRole.STAFF_USER;
 
-  private Integer workingHours = 0;
-
-  private boolean deleted;
+  private int workingHours;
 
   public UserEntity(String username, UserRole role) {
     this.username = username;

@@ -1,30 +1,49 @@
 package com.ejahijagic.staffmanagementservice.users.service;
 
+import com.ejahijagic.staffmanagementservice.exception.UserNotFoundException;
 import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.users.data.UserRole;
+import com.ejahijagic.staffmanagementservice.users.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.springframework.stereotype.Component;
 
 @Component
-public record UserService(UserRepository userRepository) {
+public record UserService(UserRepository userRepository, ObjectMapper objectMapper) {
 
-  public List<UserEntity> findAllUsers() {
-    return userRepository.findAll();
+  public List<User> findAllUsers() {
+    return userRepository.findAll().stream()
+        .map(user -> objectMapper.convertValue(user, User.class))
+        .toList();
   }
 
-  public UserEntity create(UserEntity user) {
-    return userRepository.save(user);
+  public User findUserById(Long userId) {
+    var user = userRepository.findById(userId)
+        .orElseThrow(() -> new UserNotFoundException(userId));
+
+    return objectMapper.convertValue(user, User.class);
   }
 
-  public UserEntity update(long userId, UserEntity user) {
-    user.setId(userId);
-    return userRepository.save(user);
+  public User create(UserEntity user) {
+    return objectMapper.convertValue(userRepository.save(user), User.class);
   }
 
-  public void softDelete(long userId) {
-    UserEntity user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-    user.setDeleted(true);
+  public User update(long userId, User user) {
+    UserEntity userEntity = userRepository.findById(userId)
+        .orElseThrow(() -> new UserNotFoundException(userId));
 
-    userRepository.save(user);
+    userEntity.setUsername(user.getUsername());
+    userEntity.setRole(UserRole.of(user.getRole()));
+
+    return objectMapper.convertValue(userRepository.save(userEntity), User.class);
+  }
+
+  public void delete(Long userId) {
+    if (!userRepository.existsById(userId)) {
+      throw new UserNotFoundException(userId);
+    }
+
+    userRepository.deleteById(userId);
   }
 }

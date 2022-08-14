@@ -8,6 +8,12 @@ import org.springframework.stereotype.Component;
 @Component
 public record ShiftService(ShiftRepository shiftRepository, ShiftFilterCompanion shiftCompanion) {
 
+  public List<ShiftEntity> findShifts(String from, String to) {
+    var filter = shiftCompanion.of(from, to);
+    return shiftRepository.findByDateGreaterThanEqualAndDateLessThanEqual(
+        filter.dateFrom(), filter.dateTo());
+  }
+
   public List<ShiftEntity> findShifts(long userId, String from, String to) {
     var filter = shiftCompanion.of(from, to);
     return shiftRepository.findByUserIdAndDateGreaterThanEqualAndDateLessThanEqual(

@@ -1,6 +1,6 @@
 version: '3.7'
 services:
-  db:
+  staff-service-db:
     image: mysql:8.0.30
     environment:
       MYSQL_DATABASE: "staff-management-service"
@@ -14,23 +14,23 @@ services:
     volumes:
       - staff-db-vol:/var/lib/mysql
 
-  staff-management-service:
-    image: local/staff-management-service:latest
-    build:
-      context: .
-      dockerfile: ./Dockerfile
-    environment:
-      DB_HOST: 173.20.0.5
-      DB_PORT: 3306
-      DB_NAME: staff-management-service
-      DB_USER: root
-      DB_PASS: pass
-    networks:
-      staff-network:
-        ipv4_address: 173.20.0.4
-    ports:
-      - "8080:8080"
-    restart: unless-stopped
+#  staff-management-service:
+#    image: local/staff-management-service:latest
+#    build:
+#      context: .
+#      dockerfile: ./Dockerfile
+#    environment:
+#      DB_HOST: 173.20.0.5
+#      DB_PORT: 3306
+#      DB_NAME: staff-management-service
+#      DB_USER: root
+#      DB_PASS: pass
+#    networks:
+#      staff-network:
+#        ipv4_address: 173.20.0.4
+#    ports:
+#      - "8080:8080"
+#    restart: unless-stopped
 
 volumes:
   staff-db-vol:

@@ -1,2 +1,30 @@
-### Get
-GET http://localhost:8080/resources
+### Register
+POST http://localhost:8080/api/auth/register
+Content-Type: application/json
+
+{ "username": "eldarJahijagic", "password": "123456" }
+
+### Get all users
+GET http://localhost:8080/api/users
+
+
+### Get single user
+GET http://localhost:8080/api/users/2
+
+### Update user
+PUT http://localhost:8080/api/users/1
+Content-Type: application/json
+
+{ "username": "eldarChangedUsername", "role": "staff" }
+
+### Delete user
+DELETE http://localhost:8080/api/users/1
+
+### Find all shifts
+GET http://localhost:8080/api/shifts?userId=1
+
+### Create shift
+POST http://localhost:8080/api/shifts
+Content-Type: application/json
+
+{ "username": "eldarJahijagic", "password": "123456" }
