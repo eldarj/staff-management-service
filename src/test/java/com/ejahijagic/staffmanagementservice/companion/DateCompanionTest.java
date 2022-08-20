@@ -19,7 +19,7 @@ class DateCompanionTest {
   @Test
   void parseTest() {
     // given
-    var date = "25-10-2022";
+    var date = "2022-10-25";
 
     // when
     Date parsedDate = dateCompanion.parse(date);
@@ -51,7 +51,7 @@ class DateCompanionTest {
     });
 
     // then
-    String expectedMessage = "10.2022 is in invalid, please supply yyyy-MM-dd";
+    String expectedMessage = "Invalid date, please supply yyyy-MM-dd";
     String actualMessage = exception.getMessage();
 
     assertEquals(expectedMessage, actualMessage);

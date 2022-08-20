@@ -9,7 +9,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
-import com.ejahijagic.staffmanagementservice.companion.DateCompanion;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion.ShiftFilter;
 import com.ejahijagic.staffmanagementservice.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.data.UserEntity;
@@ -34,7 +35,7 @@ class UserHoursServiceTest {
   @Mock
   ShiftRepository shiftRepository;
   @Mock
-  DateCompanion dateCompanion;
+  ShiftFilterCompanion shiftFilterCompanion;
 
   @InjectMocks
   UserHoursService userHoursService;
@@ -50,6 +51,8 @@ class UserHoursServiceTest {
     var dateToMock = DATE_FORMAT.parse("2022-12-15");
     var someShiftDate = DATE_FORMAT.parse("2022-6-25");
 
+    var filterMock = new ShiftFilter(dateFromMock, dateToMock);
+
     var shiftsMock = new ArrayList<ShiftEntity>() {{
       add(new ShiftEntity(user0Mock.getId(), 8, someShiftDate));
       add(new ShiftEntity(user0Mock.getId(), 8, someShiftDate));
@@ -60,8 +63,7 @@ class UserHoursServiceTest {
       add(new ShiftEntity(user2Mock.getId(), 4, someShiftDate));
     }};
 
-    when(dateCompanion.parse("2022-5-15")).thenReturn(dateFromMock);
-    when(dateCompanion.parse("2022-12-15")).thenReturn(dateToMock);
+    when(shiftFilterCompanion.of("2022-5-15", "2022-12-15")).thenReturn(filterMock);
     when(shiftRepository.findByDateGreaterThanEqualAndDateLessThanEqual(
         dateFromMock, dateToMock)).thenReturn(shiftsMock);
     when(userRepository.findById(user0Mock.getId())).thenReturn(Optional.of(user0Mock));

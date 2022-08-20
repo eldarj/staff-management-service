@@ -8,10 +8,10 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.ejahijagic.staffmanagementservice.exception.UserNotFoundException;
+import com.ejahijagic.staffmanagementservice.api.users.model.User;
 import com.ejahijagic.staffmanagementservice.data.UserEntity;
 import com.ejahijagic.staffmanagementservice.data.UserRepository;
-import com.ejahijagic.staffmanagementservice.api.users.model.User;
+import com.ejahijagic.staffmanagementservice.exception.UserNotFoundException;
 import com.ejahijagic.staffmanagementservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
@@ -58,7 +58,9 @@ class UserServiceTest {
   void createTest() {
     // given
     UserEntity user = new UserEntity("eldar", ADMIN_USER);
+    User expectedUser = new User(1, "eldar", ADMIN_USER.getName());
     when(userRepository.save(user)).thenReturn(user);
+    when(objectMapper.convertValue(user, User.class)).thenReturn(expectedUser);
 
     // when
     User createdUser = userService.create(user);
@@ -91,14 +93,13 @@ class UserServiceTest {
   void deleteUserTest() {
     // given
     var userId = 123L;
-    var userMock = new UserEntity("eldar", ADMIN_USER);
-    when(userRepository.findById(userId)).thenReturn(Optional.of(userMock));
+    when(userRepository.existsById(userId)).thenReturn(true);
 
     // when
     userService.delete(123L);
 
-    verify(userRepository, times(1)).findById(123L);
-    verify(userRepository, times(1)).save(userMock);
+    verify(userRepository, times(1)).existsById(123L);
+    verify(userRepository, times(1)).deleteById(123L);
   }
 
   @Test
