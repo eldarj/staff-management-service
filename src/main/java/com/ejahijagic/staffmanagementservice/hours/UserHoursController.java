@@ -16,9 +16,9 @@ public record UserHoursController(UserHoursService userHoursService) {
 
   @GetMapping
   public List<UserEntity> findHoursForUsers(
-      @RequestParam Order order,
-      @RequestParam String from,
-      @RequestParam String to) {
+      @RequestParam(required = false) Order order,
+      @RequestParam(required = false) String from,
+      @RequestParam(required = false) String to) {
     return userHoursService.findUserShiftsAccumulated(order, from, to);
   }
 }

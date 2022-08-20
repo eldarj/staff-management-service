@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import com.ejahijagic.staffmanagementservice.companion.DateCompanion.InvalidDateFilterLengthException;
+import com.ejahijagic.staffmanagementservice.exception.InvalidDateFilterLengthException;
 import java.text.ParseException;
 import java.util.Date;
 import org.junit.jupiter.api.Test;
@@ -51,7 +51,7 @@ class DateCompanionTest {
     });
 
     // then
-    String expectedMessage = "10.2022 is in invalid, please supply dd-MM-yyyy";
+    String expectedMessage = "10.2022 is in invalid, please supply yyyy-MM-dd";
     String actualMessage = exception.getMessage();
 
     assertEquals(expectedMessage, actualMessage);
@@ -60,8 +60,8 @@ class DateCompanionTest {
   @Test
   void throwsResponseExceptionWhenDateFilterSuppliedIsLargerThan1YearTest() throws ParseException {
     // given
-    var from = DATE_FORMAT.parse("1-1-2021");
-    var to = DATE_FORMAT.parse("10-9-2022");
+    var from = DATE_FORMAT.parse("2021-1-1");
+    var to = DATE_FORMAT.parse("2022-9-10");
 
     // when
     Exception exception = assertThrows(InvalidDateFilterLengthException.class, () -> {
@@ -78,7 +78,7 @@ class DateCompanionTest {
   @Test
   void returnsFalseIfSuppliedFilterIsNotValidTest() throws ParseException {
     // given
-    var from = DATE_FORMAT.parse("10-5-2022");
+    var from = DATE_FORMAT.parse("2022-5-10");
 
     // when
     boolean isValid = dateCompanion.isDateFilterValidLength(from, null);
@@ -94,8 +94,8 @@ class DateCompanionTest {
   @Test
   void returnsTrueIfSuppliedFilterIsntValidTest() throws ParseException {
     // given
-    var from = DATE_FORMAT.parse("10-5-2022");
-    var to = DATE_FORMAT.parse("10-9-2022");
+    var from = DATE_FORMAT.parse("2022-5-10");
+    var to = DATE_FORMAT.parse("2022-9-10");
 
     // when
     boolean isValid = dateCompanion.isDateFilterValidLength(from, to);

@@ -33,7 +33,7 @@ public record ShiftFilterCompanion(DateCompanion dateCompanion) {
   private ShiftFilter createDefaultFilter() {
     Date to = new Date(Instant.now().plus(182, DAYS).toEpochMilli());
     Date from = new Date(Instant.now().minus(182, DAYS).toEpochMilli());
-    return new ShiftFilter(to, from);
+    return new ShiftFilter(from, to);
   }
 
   private Date createToDate(Date from) {

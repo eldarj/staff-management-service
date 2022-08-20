@@ -1,0 +1,7 @@
+
+### Get hours per users
+GET http://localhost:8080/api/hours?order=DESC
+
+
+### Get hours per users ordered and with date filter
+GET http://localhost:8080/api/hours?order=DESC&from=2022-12-01&to=2022-12-15

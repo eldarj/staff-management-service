@@ -9,7 +9,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.ejahijagic.staffmanagementservice.companion.DateCompanion.InvalidDateFilterLengthException;
+import com.ejahijagic.staffmanagementservice.exception.InvalidDateFilterLengthException;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
 import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
 import com.ejahijagic.staffmanagementservice.shifts.service.ShiftFilterCompanion;
@@ -71,9 +71,9 @@ class ShiftServiceTest {
     when(shiftFilterCompanion.of(from, to)).thenReturn(shiftFilter);
 
     List<ShiftEntity> shiftsMock = new ArrayList<>() {{
-      add(new ShiftEntity(userId, 8, DATE_FORMAT.parse("15-08-2022")));
-      add(new ShiftEntity(userId, 8, DATE_FORMAT.parse("16-08-2022")));
-      add(new ShiftEntity(userId, 8, DATE_FORMAT.parse("17-08-2022")));
+      add(new ShiftEntity(userId, 8, DATE_FORMAT.parse("2022-08-15")));
+      add(new ShiftEntity(userId, 8, DATE_FORMAT.parse("2022-08-16")));
+      add(new ShiftEntity(userId, 8, DATE_FORMAT.parse("2022-08-17")));
     }};
 
     when(shiftRepository.findByUserIdAndDateGreaterThanEqualAndDateLessThanEqual(
@@ -91,7 +91,7 @@ class ShiftServiceTest {
   @Test
   void createShiftTest() throws ParseException {
     // given
-    ShiftEntity shift = new ShiftEntity(123L, 8, DATE_FORMAT.parse("15-08-2022"));
+    ShiftEntity shift = new ShiftEntity(123L, 8, DATE_FORMAT.parse("2022-08-15"));
     when(shiftRepository.save(shift)).thenReturn(shift);
 
     // when
@@ -105,7 +105,7 @@ class ShiftServiceTest {
   @Test
   void editShiftTest() throws ParseException {
     // given
-    ShiftEntity shift = new ShiftEntity(123L, 8, DATE_FORMAT.parse("15-08-2022"));
+    ShiftEntity shift = new ShiftEntity(123L, 8, DATE_FORMAT.parse("2022-08-15"));
     shift.setId(321L);
 
     when(shiftRepository.save(shift)).thenReturn(shift);

@@ -46,9 +46,9 @@ class UserHoursServiceTest {
     var user1Mock = getUserMock(124L);
     var user2Mock = getUserMock(125L);
 
-    var dateFromMock = DATE_FORMAT.parse("15-5-2022");
-    var dateToMock = DATE_FORMAT.parse("15-12-2022");
-    var someShiftDate = DATE_FORMAT.parse("25-6-2022");
+    var dateFromMock = DATE_FORMAT.parse("2022-5-15");
+    var dateToMock = DATE_FORMAT.parse("2022-12-15");
+    var someShiftDate = DATE_FORMAT.parse("2022-6-25");
 
     var shiftsMock = new ArrayList<ShiftEntity>() {{
       add(new ShiftEntity(user0Mock.getId(), 8, someShiftDate));
@@ -60,8 +60,8 @@ class UserHoursServiceTest {
       add(new ShiftEntity(user2Mock.getId(), 4, someShiftDate));
     }};
 
-    when(dateCompanion.parse("15-5-2022")).thenReturn(dateFromMock);
-    when(dateCompanion.parse("15-12-2022")).thenReturn(dateToMock);
+    when(dateCompanion.parse("2022-5-15")).thenReturn(dateFromMock);
+    when(dateCompanion.parse("2022-12-15")).thenReturn(dateToMock);
     when(shiftRepository.findByDateGreaterThanEqualAndDateLessThanEqual(
         dateFromMock, dateToMock)).thenReturn(shiftsMock);
     when(userRepository.findById(user0Mock.getId())).thenReturn(Optional.of(user0Mock));
@@ -69,8 +69,8 @@ class UserHoursServiceTest {
     when(userRepository.findById(user2Mock.getId())).thenReturn(Optional.of(user2Mock));
 
     // when
-    List<UserEntity> users = userHoursService.findUserShiftsAccumulated(Order.DESC, "15-5-2022",
-        "15-12-2022");
+    List<UserEntity> users = userHoursService.findUserShiftsAccumulated(Order.DESC, "2022-5-15",
+        "2022-12-15");
 
     // then
     var expectedHoursUserOne = 24;
