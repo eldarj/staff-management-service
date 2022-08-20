@@ -1,5 +1,6 @@
-package com.ejahijagic.staffmanagementservice.shifts.data;
+package com.ejahijagic.staffmanagementservice.data;
 
+import com.ejahijagic.staffmanagementservice.data.ShiftEntity;
 import java.util.Date;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;

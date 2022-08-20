@@ -1,17 +1,25 @@
-### Find all shifts
+### Find all shifts - Returns forbidden without either user or admin creds
 GET http://localhost:8080/api/shifts
 
-### Find all shifts by user
+### Find all shifts
+GET http://localhost:8080/api/shifts
+Authorization: {{user-basic-auth}}
+
+### Find shifts by user
 GET http://localhost:8080/api/shifts?userId=1
+Authorization: {{user-basic-auth}}
 
-### Find all shifts by user by date
+### Find shifts by user by date
 GET http://localhost:8080/api/shifts?userId=1&from=2022-12-10
+Authorization: {{user-basic-auth}}
 
-### Find all shifts by user by date
+### Find shifts by user by date
 GET http://localhost:8080/api/shifts?userId=1&from=2022-12-10&to=2022-12-15
+Authorization: {{user-basic-auth}}
 
 ### Create shift
 POST http://localhost:8080/api/shifts
 Content-Type: application/json
+Authorization: {{admin-basic-auth}}
 
 { "userId": "1", "date": "2022-12-12", "lengthHours": "8" }

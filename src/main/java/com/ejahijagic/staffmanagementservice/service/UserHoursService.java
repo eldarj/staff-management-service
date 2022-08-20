@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.hours.service;
+package com.ejahijagic.staffmanagementservice.service;
 
 import static java.util.Comparator.comparing;
 import static java.util.Comparator.naturalOrder;
@@ -6,12 +6,12 @@ import static java.util.Comparator.reverseOrder;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.summingInt;
 
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
-import com.ejahijagic.staffmanagementservice.shifts.service.ShiftFilterCompanion;
-import com.ejahijagic.staffmanagementservice.shifts.service.ShiftFilterCompanion.ShiftFilter;
-import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
-import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.data.ShiftEntity;
+import com.ejahijagic.staffmanagementservice.data.ShiftRepository;
+import com.ejahijagic.staffmanagementservice.data.UserEntity;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion.ShiftFilter;
+import com.ejahijagic.staffmanagementservice.data.UserRepository;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;

@@ -4,11 +4,11 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.ejahijagic.staffmanagementservice.authentication.model.RegisterUserRequest;
-import com.ejahijagic.staffmanagementservice.authentication.service.AuthenticationService;
+import com.ejahijagic.staffmanagementservice.api.authentication.model.RegisterUserRequest;
+import com.ejahijagic.staffmanagementservice.service.AuthenticationService;
 import com.ejahijagic.staffmanagementservice.companion.PasswordCompanion;
-import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
-import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.data.UserEntity;
+import com.ejahijagic.staffmanagementservice.data.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;

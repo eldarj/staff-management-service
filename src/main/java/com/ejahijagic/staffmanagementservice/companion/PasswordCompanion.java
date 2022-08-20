@@ -16,4 +16,8 @@ public class PasswordCompanion {
   public String hash(String password) {
     return encoder.encode(password);
   }
+
+  public boolean matches(String plain, String hash) {
+    return encoder.matches(plain, hash);
+  }
 }

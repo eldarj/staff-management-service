@@ -10,11 +10,11 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.exception.InvalidDateFilterLengthException;
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
-import com.ejahijagic.staffmanagementservice.shifts.service.ShiftFilterCompanion;
-import com.ejahijagic.staffmanagementservice.shifts.service.ShiftFilterCompanion.ShiftFilter;
-import com.ejahijagic.staffmanagementservice.shifts.service.ShiftService;
+import com.ejahijagic.staffmanagementservice.data.ShiftEntity;
+import com.ejahijagic.staffmanagementservice.data.ShiftRepository;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion.ShiftFilter;
+import com.ejahijagic.staffmanagementservice.service.ShiftService;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;

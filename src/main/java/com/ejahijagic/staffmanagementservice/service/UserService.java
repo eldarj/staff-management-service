@@ -1,10 +1,10 @@
-package com.ejahijagic.staffmanagementservice.users.service;
+package com.ejahijagic.staffmanagementservice.service;
 
+import com.ejahijagic.staffmanagementservice.data.UserEntity;
+import com.ejahijagic.staffmanagementservice.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.data.UserRole;
 import com.ejahijagic.staffmanagementservice.exception.UserNotFoundException;
-import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
-import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
-import com.ejahijagic.staffmanagementservice.users.data.UserRole;
-import com.ejahijagic.staffmanagementservice.users.model.User;
+import com.ejahijagic.staffmanagementservice.api.users.model.User;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.List;
 import org.springframework.stereotype.Component;

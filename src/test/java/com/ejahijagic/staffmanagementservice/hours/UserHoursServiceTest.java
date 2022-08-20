@@ -1,7 +1,7 @@
 package com.ejahijagic.staffmanagementservice.hours;
 
 import static com.ejahijagic.staffmanagementservice.companion.DateCompanion.DATE_FORMAT;
-import static com.ejahijagic.staffmanagementservice.users.data.UserRole.STAFF_USER;
+import static com.ejahijagic.staffmanagementservice.data.UserRole.STAFF_USER;
 import static com.github.seregamorph.hamcrest.OrderMatchers.strictOrdered;
 import static java.util.Collections.reverseOrder;
 import static java.util.Comparator.comparing;
@@ -10,12 +10,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.companion.DateCompanion;
-import com.ejahijagic.staffmanagementservice.hours.service.UserHoursService;
-import com.ejahijagic.staffmanagementservice.hours.service.UserHoursService.Order;
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
-import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
-import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.data.ShiftEntity;
+import com.ejahijagic.staffmanagementservice.data.ShiftRepository;
+import com.ejahijagic.staffmanagementservice.data.UserEntity;
+import com.ejahijagic.staffmanagementservice.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.service.UserHoursService;
+import com.ejahijagic.staffmanagementservice.service.UserHoursService.Order;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -89,7 +89,7 @@ class UserHoursServiceTest {
   }
 
   private UserEntity getUserMock(long id) {
-    return new UserEntity(id, "mock", "", STAFF_USER, 0, false);
+    return new UserEntity(id, "mock", "", STAFF_USER, 0);
   }
 
   private Integer getHours(long userId, List<UserEntity> users) {

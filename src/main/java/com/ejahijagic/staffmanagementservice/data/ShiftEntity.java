@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.shifts.data;
+package com.ejahijagic.staffmanagementservice.data;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import java.util.Date;

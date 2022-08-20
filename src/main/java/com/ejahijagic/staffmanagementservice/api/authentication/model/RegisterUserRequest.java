@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.users.model;
+package com.ejahijagic.staffmanagementservice.api.authentication.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,11 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
-
-  private long id;
+public class RegisterUserRequest {
 
   private String username;
 
-  private String role;
+  private String password;
 }

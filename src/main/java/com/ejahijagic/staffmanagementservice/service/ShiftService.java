@@ -1,7 +1,8 @@
-package com.ejahijagic.staffmanagementservice.shifts.service;
+package com.ejahijagic.staffmanagementservice.service;
 
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftEntity;
-import com.ejahijagic.staffmanagementservice.shifts.data.ShiftRepository;
+import com.ejahijagic.staffmanagementservice.data.ShiftRepository;
+import com.ejahijagic.staffmanagementservice.data.ShiftEntity;
+import com.ejahijagic.staffmanagementservice.companion.ShiftFilterCompanion;
 import java.util.List;
 import org.springframework.stereotype.Component;
 

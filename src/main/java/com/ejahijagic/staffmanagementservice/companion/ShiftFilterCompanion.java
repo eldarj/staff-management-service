@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.shifts.service;
+package com.ejahijagic.staffmanagementservice.companion;
 
 import static java.time.temporal.ChronoUnit.DAYS;
 

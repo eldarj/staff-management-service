@@ -1,10 +1,10 @@
-package com.ejahijagic.staffmanagementservice.authentication.service;
+package com.ejahijagic.staffmanagementservice.service;
 
-import com.ejahijagic.staffmanagementservice.authentication.model.RegisterUserRequest;
+import com.ejahijagic.staffmanagementservice.data.UserEntity;
+import com.ejahijagic.staffmanagementservice.api.authentication.model.RegisterUserRequest;
 import com.ejahijagic.staffmanagementservice.companion.PasswordCompanion;
 import com.ejahijagic.staffmanagementservice.exception.UserAlreadyExistsException;
-import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
-import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.data.UserRepository;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Component;
 

@@ -4,18 +4,24 @@ Content-Type: application/json
 
 { "username": "eldarJahijagic", "password": "123456" }
 
-### Get all users
+### Get all users - returns forbidden without admin creds
 GET http://localhost:8080/api/users
 
+### Get all users
+GET http://localhost:8080/api/users
+Authorization: {{admin-basic-auth}}
 
 ### Get single user
 GET http://localhost:8080/api/users/2
+Authorization: {{admin-basic-auth}}
 
 ### Update user
 PUT http://localhost:8080/api/users/1
 Content-Type: application/json
+Authorization: {{admin-basic-auth}}
 
 { "username": "eldarChangedUsername", "role": "staff" }
 
 ### Delete user
 DELETE http://localhost:8080/api/users/1
+Authorization: {{admin-basic-auth}}

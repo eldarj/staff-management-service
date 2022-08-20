@@ -1,7 +1,7 @@
 package com.ejahijagic.staffmanagementservice.users;
 
-import static com.ejahijagic.staffmanagementservice.users.data.UserRole.ADMIN_USER;
-import static com.ejahijagic.staffmanagementservice.users.data.UserRole.STAFF_USER;
+import static com.ejahijagic.staffmanagementservice.data.UserRole.ADMIN_USER;
+import static com.ejahijagic.staffmanagementservice.data.UserRole.STAFF_USER;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.times;
@@ -9,10 +9,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.ejahijagic.staffmanagementservice.exception.UserNotFoundException;
-import com.ejahijagic.staffmanagementservice.users.data.UserEntity;
-import com.ejahijagic.staffmanagementservice.users.data.UserRepository;
-import com.ejahijagic.staffmanagementservice.users.model.User;
-import com.ejahijagic.staffmanagementservice.users.service.UserService;
+import com.ejahijagic.staffmanagementservice.data.UserEntity;
+import com.ejahijagic.staffmanagementservice.data.UserRepository;
+import com.ejahijagic.staffmanagementservice.api.users.model.User;
+import com.ejahijagic.staffmanagementservice.service.UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.ArrayList;
 import java.util.List;

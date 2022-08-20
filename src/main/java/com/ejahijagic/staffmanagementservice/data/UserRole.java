@@ -1,4 +1,4 @@
-package com.ejahijagic.staffmanagementservice.users.data;
+package com.ejahijagic.staffmanagementservice.data;
 
 import java.util.Objects;
 

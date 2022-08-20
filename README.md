@@ -109,6 +109,24 @@ an endpoint for registering as a new user.
 * Deleted (soft)
 
 
+## Auth Roles & Permissions on Endpoints Matrix
+##### Staff User:
+* Can register 
+  * **_public_**
+* Can view his/her schedule for any period of time (up to 1 year) 
+  * **SHIFTS_SEE**
+* Can see his/her coworker schedules 
+  * **SHIFTS_SEE**
+
+#### Admin:
+* Can edit/delete all users
+  * **USERS_SEE, USERS_CREATE, USERS_EDIT, USERS_DELETE**
+* Can create/edit/delete schedule for users 
+  * **SHIFTS_SEE, SHIFTS_CREATE, SHIFTS_EDIT, SHIFTS_DELETE**
+* Can order users list by accumulated work hours per arbitrary period (up to 1
+  year) 
+  * **SHIFT_HOURS_SEE**
+
 ## Todos
 
 - [x] Git
