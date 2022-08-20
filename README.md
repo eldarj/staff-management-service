@@ -56,7 +56,14 @@ Run each in your IDE or with `mvn test`
 ---
 
 ## REST Endpoints
-The set of endpoints this service provides:
+The set of endpoints this service provides are the following
+
+> **Note**
+> Registration endpoint is public, all others require an Authorization header with
+> credentials in basic format username:password
+
+
+
 ### Registration
 * /api/auth/register POST
 
@@ -95,6 +102,11 @@ an endpoint for registering as a new user.
     * order
     * from
     * to
+
+> **Note**
+> All from and to date parameters have to be supplied in yyyy-MM-dd
+
+---
 ## Data and Schema
 #### Shift (Schedule)
 * Work date
@@ -106,9 +118,8 @@ an endpoint for registering as a new user.
 * Password
 * Role
 * Working hours aggregation
-* Deleted (soft)
 
-
+---
 ## Auth Roles & Permissions on Endpoints Matrix
 ##### Staff User:
 * Can register 
@@ -126,9 +137,8 @@ an endpoint for registering as a new user.
 * Can order users list by accumulated work hours per arbitrary period (up to 1
   year) 
   * **SHIFT_HOURS_SEE**
-
-## Todos
-
+---
+### Todo Items
 - [x] Git
 - [x] Readme
 - [ ] Open API
@@ -138,11 +148,14 @@ an endpoint for registering as a new user.
   - [x] Working hours
   - [x] Aggregation of shifts per user
   - [x] Order by accumulated working hours
-- [ ] Auth
+- [x] Auth
   - [x] Register
-  - [ ] Authorization on endpoints
+  - [x] Roles
+  - [x] Permissions
+  - [x] Authorization on endpoints
 - [x] Unit tests
 - [ ] Integration, End to end tests
+- [x] http request scratches in `test/resources`
 - [x] Run app in docker
 - [x] Database
   - [x] Feed data on init
